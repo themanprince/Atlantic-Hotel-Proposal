@@ -38,7 +38,27 @@
             </div>
         </div>
     </div>
-    
+    <button onclick="payWithPaystack()">Pay Now</button>
+
+    <script src="/static/inline.js"></script>
+    <script>
+        function payWithPaystack() {
+            var handler = PaystackPop.setup({
+                key: "pk_test_9bc7af1b4b7a7f9d5607601a8c33126525ed0d61",
+                email: "princeadigwe29@gmail.com",
+                amount: 50000,
+                currency: "NGN",
+                ref: ''+Math.floor((Math.random() * 10000000) + 1),
+                callback: function(response) {
+                    window.alert("Success");
+                },
+                onClose: function() {
+                    window.alert("Transaction Cancelled");
+                }
+            });
+            handler.openIframe();
+        }
+    </script>
 
     <script src="/static/sweetalert2.all.js"></script>
     {% if onLoadMessage %}
