@@ -1,8 +1,15 @@
 from sqlalchemy import create_engine, Column, ForeignKey, Integer, Float, String, Boolean, Date, DateTime
 from sqlalchemy.orm import Session, sessionmaker, declarative_base, relationship
 from datetime import date, datetime
+import os
+from dotenv import load_dotenv
 
-DATABASE_URL = "sqlite:///./db_file.db"
+load_dotenv()
+
+DATABASE_URL = os.environ["DATABASE_URL"]
+
+if not DATABASE_URL:
+    raise Exception("Site Owner.. Please set env var DATABASE_URL")
 
 engine = create_engine(DATABASE_URL)
 
@@ -33,6 +40,7 @@ class RoomType(Base):
     description = Column(String())
     price = Column(Float())
     capacity = Column(Integer())
+    thumbnail_img_url = Column(String())
 
     rooms = relationship("Room", back_populates="room_type")
 
@@ -56,12 +64,10 @@ class Booking(Base):
     price = Column(Float())
     check_in_date = Column(Date(), default=date.today)
     check_out_date = Column(Date())
-    payment_id = Column(Integer(), ForeignKey("Payment")) #this column can be used to ascertain payment status for this column i.e. if null, then payment has not been made
-
+    
     guest = relationship("Guest")
     room = relationship("Room")
-    payment = relationship("Payment", backref="booking", uselist=False)
-
+    
 
 class Payment(Base):
     __tablename__ = "payment"

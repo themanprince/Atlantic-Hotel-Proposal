@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"/>
+     <title>Dashboard</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12"><h1 class="h1 my-3">Hotel Admin Dashboard</h1></div>
+        </div>
+        <div class="row gx-5">
+            <div class="col-3">
+                <div class="p-4 card bg-primary bg-opacity-25 rounded-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Room Types</h4>
+                        <a href="/admin/room-type"><p class="card-text text-primary">View/Add Room Type</p></a>
+                    </div>
+                </div>                
+            </div>
+            <div class="col-3">
+                <div class="p-4 card bg-warning bg-opacity-25 rounded-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Inventory</h4>
+                        <a href="/inventory"><p class="card-text text-primary">Open Inventory</p></a>
+                    </div>
+                </div>                
+            </div>
+            <div class="col-3">
+                <div class="p-4 card bg-info bg-opacity-25 rounded-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Stock Movement</h4>
+                        <a href="/stock-movement"><p class="card-text text-primary">View Stock Cards</p></a>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="/static/sweetalert2.all.js"></script>
+    {% if onLoadMessage %}
+        <script>
+            window.addEventListener("load", e => {
+                Swal.fire({
+                    'icon': 'success',
+                    'text': '{{onLoadMessage}}',
+                    'confirmButtonText': 'OK'
+                });
+            });
+        </script>
+    {% endif %}
+</body>
+</html>

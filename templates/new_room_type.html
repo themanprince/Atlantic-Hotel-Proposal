@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Add New Room Type</title>
+</head>
+<body>
+    {% if room_types %}
+        <section class="room__container py-0" id="room">
+            <p class="section__subheader">ROOMS</p>
+            <h2 class="section__header">Room Types</h2>
+            <div class="room__grid">
+                {% for room_type in room_types %}
+                    <div class="room__card">
+                    <img src="{{room_type.thumbnail_img_url}}" alt="room" />
+                    <div class="room__card__details">
+                        <div>
+                        <h4>{{room_type.room_type_name}}</h4>
+                        <p>{{room_type.description}}</p>
+                        </div>
+                        <h3>N{{room_type.price}}<span>/day</span></h3>
+                    </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+    
+    <section class="room__container py-0" id="room">
+        <p class="section__subheader">Fill The Form Below</p>
+        <h2 class="section__header">ADD NEW ROOM TYPE</h2>
+        <div class="my-3 w-50 p-5 mx-auto border border-3">
+            <form id="add-room-type-form">
+                <div class="my-3">
+                    <label for="room_type_name" class="form-label border-0"><b>Room Type Name</b></label>
+                    <input required name="room_type_name" type="text" id="room_type_name" class="form-control" placeholder="Room Type Name"/>
+                    <small id="helpId" class="text-warning small">Enter the Name of new Room Type to Add</small>
+                </div>
+                <div class="my-3">
+                    <label for="description" class="form-label border-0"><b>Description</b></label>
+                    <input required name="description" type="text" id="description" class="form-control" placeholder="Room Type Name"/>
+                    <small id="helpId" class="text-warning small">Enter the Description</small>
+                </div>
+                <div class="my-3">
+                    <label for="price" class="form-label border-0"><b>Price</b></label>
+                    <input required name="price" type="number" min="0" id="price" class="form-control" placeholder="Price"/>
+                    <small id="helpId" class="text-warning small">Enter Price of Room Type</small>
+                </div>
+                <div class="my-3">
+                    <label for="capacity" class="form-label border-0"><b>Capacity</b></label>
+                    <input name="capacity" type="number" min="0" id="capacity" class="form-control" placeholder="e.g. 10, 20, 50"/>
+                    <small id="helpId" class="text-warning small">Enter max Capacity of Room Type</small>
+                </div>
+                <button type="submit" class="btn btn-primary my-3">Add Room Type</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="/static/sweetalert2.all.js"></script>
+    <script src="/static/custom_scripts/new_room_type_script.js"></script>
+    
+</body>
+</html>
