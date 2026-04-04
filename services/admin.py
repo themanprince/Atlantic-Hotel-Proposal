@@ -6,6 +6,17 @@ from random import choice
 
 class AdminServices:
     @classmethod
+    async def get_dashboard_statistics(cls, session: Session):
+        room_types = len(session.query(RoomType).all())
+        all_rooms = session.query(Room).all()
+        reserved_rooms = len([room for room in all_rooms if room.reserved is True])
+        booked_rooms = len([room for room in all_rooms if room.booked is True])
+        total_rooms = len(all_rooms)
+    
+        return dict(reserved_rooms = reserved_rooms, booked_rooms = booked_rooms, total_rooms=total_rooms, room_types=room_types)
+    
+
+    @classmethod
     async def new_room_type(cls, session: Session, room_type_name:str, description:str, price:float, capacity:int):
         
         thumbnail_urls = [

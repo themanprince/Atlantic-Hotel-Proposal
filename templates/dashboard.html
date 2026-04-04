@@ -9,38 +9,71 @@
 </head>
 <body>
     {% include 'components/admin_nav.html' %}
-    
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12"><h1 class="h1 my-3">Hotel Admin Dashboard</h1></div>
+
+    <section class="room__container py-0 pt-3" id="room">
+        <p class="section__subheader my-0">Your Control Tower</p>
+        <h2 class="section__header">Dashboard</h2>
+        <div class="container-fluid">
+            <div class="row gx-5 justify-content-center">
+                <div class="col-3">
+                    <div class="p-4 card bg-warning bg-opacity-25 rounded-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Rooms</h4>
+                            <a href="/admin/room"><p class="card-text text-primary">View / Add Rooms</p></a>
+                        </div>
+                    </div>                
+                </div>
+                <div class="col-3">
+                    <div class="p-4 card bg-primary bg-opacity-25 rounded-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Room Types</h4>
+                            <a href="/admin/room-type"><p class="card-text text-primary">View/Add Room Type</p></a>
+                        </div>
+                    </div>                
+                </div>
+                <div class="col-3">
+                    <div class="p-4 card bg-info bg-opacity-25 rounded-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Stock Movement</h4>
+                            <a href="/stock-movement"><p class="card-text text-primary">View Stock Cards</p></a>
+                        </div>
+                    </div>                
+                </div>
+            </div>
         </div>
-        <div class="row gx-5">
-            <div class="col-3">
-                <div class="p-4 card bg-warning bg-opacity-25 rounded-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Rooms</h4>
-                        <a href="/admin/room"><p class="card-text text-primary">View / Add Rooms</p></a>
-                    </div>
-                </div>                
+    </section>
+
+    {% if statistics %}
+        <section class="room__container" id="room">
+            <p class="section__subheader my-0">Statistical Summary</p>
+            <h2 class="section__header">Stats</h2>
+            <div class="my-3 w-100">
+                <ul class="menu__banner">
+                    <li>
+                        <span><i class="ri-file-text-line"></i></span>
+                        <h4>{{statistics.reserved_rooms}}</h4>
+                        <p>Reserved Rooms</p>
+                    </li>
+                    <li>
+                        <span><i class="ri-user-line"></i></span>
+                        <h4>{{statistics.booked_rooms}}</h4>
+                        <p>Booked Rooms</p>
+                    </li>
+                    <li>
+                        <span><i class="ri-function-line"></i></span>
+                        <h4>{{statistics.total_rooms}}</h4>
+                        <p>Total Rooms</p>
+                    </li>
+                    <li>
+                        <span><i class="ri-function-line"></i></span>
+                        <h4>{{statistics.room_types}}</h4>
+                        <p>Room Types Available</p>
+                    </li>
+                </ul>
             </div>
-            <div class="col-3">
-                <div class="p-4 card bg-primary bg-opacity-25 rounded-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Room Types</h4>
-                        <a href="/admin/room-type"><p class="card-text text-primary">View/Add Room Type</p></a>
-                    </div>
-                </div>                
-            </div>
-            <div class="col-3">
-                <div class="p-4 card bg-info bg-opacity-25 rounded-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Stock Movement</h4>
-                        <a href="/stock-movement"><p class="card-text text-primary">View Stock Cards</p></a>
-                    </div>
-                </div>                
-            </div>
-        </div>
-    </div>
+        </section>
+    {% endif %}
+
     <button onclick="payWithPaystack()">Pay Now</button>
 
     <script src="/static/inline.js"></script>

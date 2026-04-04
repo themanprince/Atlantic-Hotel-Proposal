@@ -35,5 +35,6 @@ async def new_room(session: Session = Depends(get_db), room_number:int = Body(em
 
 @AdminRouter.get("/dashboard", response_class=HTMLResponse)
 @AdminRouter.post("/dashboard", response_class=HTMLResponse)
-async def dashboard(request:Request, onLoadMessage:str|None = None):
-    return templates.TemplateResponse("dashboard.html", {"request": request, "onLoadMessage": onLoadMessage})
+async def dashboard(request:Request, onLoadMessage:str|None = None, session:Session = Depends(get_db)):
+    statistics = await AdminServices.get_dashboard_statistics(session = session)
+    return templates.TemplateResponse("dashboard.html", {"request": request, "onLoadMessage": onLoadMessage, "statistics": statistics})
