@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Add New Room</title>
+</head>
+<body>
+    {% if rooms %}
+        <section class="room__container py-0" id="room">
+            <p class="section__subheader">ROOMS</p>
+            <h2 class="section__header">The Hotel Rooms</h2>
+
+            <div class="h-25 overflow-scroll">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-active table-borderless align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Room Number</th>
+                                <th>Type</th>
+                                <th>Reserved?</th>
+                                <th>Booked?</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            {% for room in rooms %}
+                                <tr class="table-primary">
+                                    <td scope="row">{{room.room_number}}</td>
+                                    <td>{{room.room_type.room_type_name}}</td>
+                                    <td>{% if room.reserved %} Yes {% else %} No {% endif %}</td>
+                                    <td>{% if room.booked %} Yes {% else %} No {% endif %}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    <section class="room__container py-0" id="room">
+        <p class="section__subheader">Fill The Form Below</p>
+        <h2 class="section__header">ADD NEW ROOM</h2>
+
+        <div class="my-3 w-50 p-5 mx-auto border border-3">
+            <form id="add-new-room-form">
+                <div class="my-3">
+                    <label for="room_number" class="form-label border-0"><b>Room Number</b></label>
+                    <input required name="room_number" type="number" id="room_number" class="form-control" placeholder="..."/>
+                    <small id="helpId" class="text-muted">Assign Room Number</small>
+                </div>
+                <div class="my-3">
+                    <label for="room_type_id" class="form-label border-0"><b>Room Type</b></label>
+                    <select required name="room_type_id" id="room_type_id" class="form-select">
+                        {% for room_type in room_types %}
+                            <option value="{{room_type.room_type_id}}">{{room_type.room_type_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <small id="helpId" class="text-muted">Select Room Type</small>
+                </div>
+
+                <button type="submit" id="submit-btn-add-room" class="btn btn-primary my-3">Add Room</button>
+            </form>
+        </div>
+    </section>
+    
+    <script src="/static/sweetalert2.all.js"></script>
+    <script src="/static/custom_scripts/new_room_script.js"></script>
+</body>
+</html>

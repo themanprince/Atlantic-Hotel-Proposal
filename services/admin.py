@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
-from db.db import RoomType
+from db.db import Room, RoomType
 from fastapi import HTTPException
+from sqlite3 import IntegrityError
 from random import choice
 
 class AdminServices:
@@ -26,10 +27,38 @@ class AdminServices:
             session.commit()
             return {"status": "success"}
         except Exception as err:
-            return HTTPException(status_code=400, detail=f"Error in Creating RoomType\n{err}")
+            raise HTTPException(status_code=400, detail=f"{err}")
         
     
     @classmethod
     async def get_all_room_types(cls, session: Session):
         results = session.query(RoomType).all()
         return results
+    
+
+    @classmethod
+    async def new_room(cls, session: Session, room_number: int, room_type_id:int):
+        try:
+            existing_room =  await cls.get_room(room_number=room_number, session=session)
+            
+            if existing_room:
+                raise IntegrityError(f"Room with number {room_number} already exists")
+
+            session.add(Room(
+                room_number = room_number,
+                room_type_id = room_type_id,
+            ))
+            session.commit()
+            return {"status": "success"}
+        except Exception as err:
+            raise HTTPException(status_code=400, detail=f"{err}")
+
+    
+    @classmethod
+    async def get_room(cls, room_number:int, session: Session):
+        return session.query(Room).filter_by(room_number = room_number).first()
+
+    
+    @classmethod
+    async def get_all_rooms(cls, session: Session):
+        return session.query(Room).order_by(Room.room_type_id).all()

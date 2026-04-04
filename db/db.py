@@ -50,7 +50,9 @@ class Room(Base):
 
     room_number = Column(Integer(), primary_key=True, index=True)
     room_type_id = Column(Integer(), ForeignKey("room_type.room_type_id"))
-    available = Column(Boolean())
+    reserved = Column(Boolean(), default=False)
+    booked = Column(Boolean(), default=False)
+    
 
     room_type = relationship("RoomType", back_populates="rooms", uselist=False)
 

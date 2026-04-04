@@ -1,5 +1,6 @@
 document.getElementById("add-room-type-form").addEventListener("submit", async (e) => {
     e.preventDefault();
+    const submitBtn = document.getElementById("submit-btn-add-room-type");
 
     const room_type_name = document.getElementById("room_type_name").value;
     const description = document.getElementById("description").value;
@@ -17,6 +18,7 @@ document.getElementById("add-room-type-form").addEventListener("submit", async (
         return;
     }
 
+    submitBtn.innerText = "...Loading...";
     try {
         const response = await fetch("/admin/room-type", {
             "method": "POST",
@@ -26,6 +28,12 @@ document.getElementById("add-room-type-form").addEventListener("submit", async (
 
         if (response.ok)
             window.location.href="/admin/dashboard?onLoadMessage=Room%20Type%20Created%20Successfully";
+        else if ((response.status >= 400) && (response.status <= 599))
+            error = await response.json()
+            Swal.fire({
+                "icon": "error",
+                "text": error.detail
+            });
 
     } catch(error) {
         Swal.fire({
