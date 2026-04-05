@@ -24,9 +24,9 @@ document.getElementById("add-new-room-form").addEventListener("submit", async (e
             "body": JSON.stringify({room_number, room_type_id})
         });
 
-        if (response.ok)
+        if (response.ok){
             window.location.href="/admin/dashboard?onLoadMessage=New%20Room%20%20Added%20Successfully";
-        else if ((response.status >= 400) && (response.status <= 599)) {
+        } else if ((response.status >= 400) && (response.status <= 599)) {
             const error = await response.json()
             Swal.fire({
                 "icon": "error",

@@ -13,7 +13,7 @@
         <p class="section__subheader">Fill The Form Below</p>
         <h2 class="section__header">Book a Room</h2>
         <div class="my-3 w-50 p-5 mx-auto border border-3">
-            <form id="book-room-form">
+            <form id="book-room-form" method="POST">
                 <div class="my-3">
                     <label for="phone_number" class="form-label border-0"><b>Phone Number</b></label>
                     <div class="input-group">
@@ -44,31 +44,51 @@
                 </div>
                 <p class="section__subheader">SELECT A ROOM BELOW</p>
                 {% if room_types %}
-                    <div class="room__grid">
+                    <div class="d-flex flex-column align-items-center justify-content-between">
                         {% for room_type in room_types %}
                             <div class="room__card">
-                            <img src="{{room_type.thumbnail_img_url}}" alt="room" />
-                            <div class="room__card__details">
-                                <div>
-                                <h4>{{room_type.room_type_name}}</h4>
-                                <p>{{room_type.description}}</p>
+                                <img src="{{room_type.thumbnail_img_url}}" alt="room" />
+                                <div class="room__card__details">
+                                    <div>
+                                    <h4>{{room_type.room_type_name}}</h4>
+                                    <p>{{room_type.description}}</p>
+                                    </div>
+                                    <h3>N{{room_type.price}}<span>/day</span></h3>
+                                    <div class="btn d-inline-flex flex-row">
+                                        <input type="radio" name="room_type_id" value="{{room_type.room_type_id}}" id="room_type_id_{{room_type.room_type_id}}"/>
+                                        <label for="room_type_id_{{room_type.room_type_id}}">Select This Room</label>
+                                    </div>
                                 </div>
-                                <h3>N{{room_type.price}}<span>/day</span></h3>
                             </div>
-                            </div>
-                            <input type="radio" name="room_type_id" value="{{room_type.room_type_id}}"/>Select This Room
                         {% endfor %}
                     </div>
                 {% endif %}
 
-                <button type="submit" id="submit-btn-add-room-type" class="btn btn-primary my-3">Check Availability</button>
+                <button type="submit" id="submit-btn-book-room" class="btn btn-primary my-3 mx-auto w-100">Check Availability</button>
             </form>
         </div>
     </section>
 
+    <script src="/static/paystack-inline.js"></script>
+    <script>
+        function payWithPaystack(email, amount, booking_id, callback_success) {
+        var handler = PaystackPop.setup({
+            "key": "pk_test_9bc7af1b4b7a7f9d5607601a8c33126525ed0d61",
+            "email": email,
+            "amount": amount,
+            "currency": "NGN",
+            "ref": booking_id,
+            callback: callback_success,
+            onClose: function() {
+                Swal.fire("Transaction Closed!!");
+            }
+        });
+        handler.openIframe();
+    }
 
+    </script>    
     <script src="/static/sweetalert2.all.js"></script>
-    
+    <script src="/static/custom_scripts/book_room_script.js"></script>
     
 </body>
 </html>

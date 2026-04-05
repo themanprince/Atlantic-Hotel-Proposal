@@ -18,7 +18,9 @@ document.getElementById("add-room-type-form").addEventListener("submit", async (
         return;
     }
 
+    submitBtn.disabled = true;
     submitBtn.innerText = "...Loading...";
+
     try {
         const response = await fetch("/admin/room-type", {
             "method": "POST",
@@ -26,15 +28,15 @@ document.getElementById("add-room-type-form").addEventListener("submit", async (
             "body": JSON.stringify({room_type_name, description, price, capacity})
         });
 
-        if (response.ok)
+        if (response.ok){
             window.location.href="/admin/dashboard?onLoadMessage=Room%20Type%20Created%20Successfully";
-        else if ((response.status >= 400) && (response.status <= 599))
+        } else if ((response.status >= 400) && (response.status <= 599)) {
             error = await response.json()
             Swal.fire({
                 "icon": "error",
                 "text": error.detail
             });
-
+        }
     } catch(error) {
         Swal.fire({
             "icon": "error",
@@ -42,4 +44,6 @@ document.getElementById("add-room-type-form").addEventListener("submit", async (
         });
     }
 
+    submitBtn.disabled = false;
+    submitBtn.innerText = "Add Room Type";
 });
