@@ -4,7 +4,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
-from routes.admin import AdminRouter
+from routers.admin import AdminRouter
+from routers.booking import BookingRouter
+
 from services.admin import AdminServices
 from db.db import get_db
 from sqlalchemy.orm import Session
@@ -31,6 +33,7 @@ async def landing(request: Request, session:Session = Depends(get_db)):
 
 
 app.include_router(AdminRouter)
+app.include_router(BookingRouter)
 
 
 if __name__ == "__main__":

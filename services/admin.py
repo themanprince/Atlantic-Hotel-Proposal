@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from db.db import Room, RoomType
+from db.db import Room, RoomType, Booking
 from fastapi import HTTPException
 from sqlite3 import IntegrityError
 from random import choice
@@ -8,12 +8,14 @@ class AdminServices:
     @classmethod
     async def get_dashboard_statistics(cls, session: Session):
         room_types = len(session.query(RoomType).all())
+
         all_rooms = session.query(Room).all()
-        reserved_rooms = len([room for room in all_rooms if room.reserved is True])
-        booked_rooms = len([room for room in all_rooms if room.booked is True])
+        available_rooms = len([room for room in all_rooms if room.available]) #type: ignore
         total_rooms = len(all_rooms)
+
+        pending_payments = len(session.query(Booking).filter(Booking.payment is None).all()) #type: ignore
     
-        return dict(reserved_rooms = reserved_rooms, booked_rooms = booked_rooms, total_rooms=total_rooms, room_types=room_types)
+        return dict(available_rooms = available_rooms, total_rooms=total_rooms, room_types=room_types, pending_payments=pending_payments)
     
 
     @classmethod

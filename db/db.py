@@ -27,10 +27,7 @@ class Guest(Base):
     address = Column(String())
     phone = Column(String())
     email = Column(String())
-    next_of_kin_name = Column(String())
-    next_of_kin_phone_number = Column(String())
-    married = Column(Boolean())
-
+    
 
 class RoomType(Base):
     __tablename__ = "room_type"
@@ -50,9 +47,7 @@ class Room(Base):
 
     room_number = Column(Integer(), primary_key=True, index=True)
     room_type_id = Column(Integer(), ForeignKey("room_type.room_type_id"))
-    reserved = Column(Boolean(), default=False)
-    booked = Column(Boolean(), default=False)
-    
+    available = Column(Boolean(), default=True) #instead of having the Booking table be the sole determinant of whether a room is booked or not, I think it would be better to use a column on the Room itself. If the determinant were the Booking table, then past booking records of a room will affect its current availability status
 
     room_type = relationship("RoomType", back_populates="rooms", uselist=False)
 
@@ -64,11 +59,12 @@ class Booking(Base):
     guest_id = Column(Integer(), ForeignKey("guest.guest_id"))
     room_number = Column(Integer(), ForeignKey("room.room_number"))
     price = Column(Float())
-    check_in_date = Column(Date(), default=date.today)
+    check_in_date = Column(Date())
     check_out_date = Column(Date())
     
     guest = relationship("Guest")
     room = relationship("Room")
+    payment = relationship("Payment", back_populates="booking", uselist=False)
     
 
 class Payment(Base):
@@ -80,7 +76,7 @@ class Payment(Base):
     payment_timestamp = Column(DateTime(), default=datetime.now())
     payment_method = Column(String())
 
-    booking = relationship("Booking", backref="payment", uselist=False)
+    booking = relationship("Booking", back_populates="payment", uselist=False)
 
 
 

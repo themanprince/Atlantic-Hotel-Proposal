@@ -26,12 +26,13 @@ document.getElementById("add-new-room-form").addEventListener("submit", async (e
 
         if (response.ok)
             window.location.href="/admin/dashboard?onLoadMessage=New%20Room%20%20Added%20Successfully";
-        else if ((response.status >= 400) && (response.status <= 599))
-            error = await response.json()
+        else if ((response.status >= 400) && (response.status <= 599)) {
+            const error = await response.json()
             Swal.fire({
                 "icon": "error",
                 "text": error.detail
             });
+        }
 
     } catch(error) {
         Swal.fire({

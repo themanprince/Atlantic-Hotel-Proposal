@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Book Room</title>
+</head>
+<body>
+
+    <section class="room__container py-0" id="room">
+        <p class="section__subheader">Fill The Form Below</p>
+        <h2 class="section__header">Book a Room</h2>
+        <div class="my-3 w-50 p-5 mx-auto border border-3">
+            <form id="book-room-form">
+                <div class="my-3">
+                    <label for="phone_number" class="form-label border-0"><b>Phone Number</b></label>
+                    <div class="input-group">
+                        <span class="input-group-text">+234</span>
+                        <input required {% if phone_number %} value={{phone_number}} {% endif %} name="phone_number" type="number" id="phone_number" class="form-control" placeholder="Your Phone Number" />
+                    </div>
+                    <small id="helpId" class="text-warning small">Enter/Edit your Phone Number</small>
+                </div>
+                <div class="my-3">
+                    <label for="email" class="form-label border-0"><b>Email Address</b></label>
+                    <input required {% if email %} value={{email}} {% endif %} name="email" type="email" id="email" class="form-control" placeholder="e.g. example@gmail.com, example@yahoo.com"/>
+                    <small id="helpId" class="text-warning small">Enter your Email</small>
+                </div>
+                <div class="my-3">
+                    <label for="arrival" class="form-label border-0"><b>Expected Arrival Date</b></label>
+                    <input required {% if arrival_date %} value={{arrival_date}} {% endif %} name="arrival_date" type="date" id="arrival" class="form-control"/>
+                    <small id="helpId" class="text-warning small">Enter Date of your arrival</small>
+                </div>
+                <div class="my-3">
+                    <label for="full_name" class="form-label border-0"><b>Full Name</b></label>
+                    <input required name="full_name" type="text" id="full_name" class="form-control"/>
+                    <small id="helpId" class="text-warning small">Your first and last names</small>
+                </div>
+                <div class="my-3">
+                    <label for="address" class="form-label border-0"><b>Home Address</b></label>
+                    <input name="address" type="text" id="address" class="form-control"/>
+                    <small id="helpId" class="text-warning small">Enter your physical/home address</small>
+                </div>
+                <p class="section__subheader">SELECT A ROOM BELOW</p>
+                {% if room_types %}
+                    <div class="room__grid">
+                        {% for room_type in room_types %}
+                            <div class="room__card">
+                            <img src="{{room_type.thumbnail_img_url}}" alt="room" />
+                            <div class="room__card__details">
+                                <div>
+                                <h4>{{room_type.room_type_name}}</h4>
+                                <p>{{room_type.description}}</p>
+                                </div>
+                                <h3>N{{room_type.price}}<span>/day</span></h3>
+                            </div>
+                            </div>
+                            <input type="radio" name="room_type_id" value="{{room_type.room_type_id}}"/>Select This Room
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <button type="submit" id="submit-btn-add-room-type" class="btn btn-primary my-3">Check Availability</button>
+            </form>
+        </div>
+    </section>
+
+
+    <script src="/static/sweetalert2.all.js"></script>
+    
+    
+</body>
+</html>

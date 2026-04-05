@@ -22,8 +22,7 @@
                             <tr>
                                 <th>Room Number</th>
                                 <th>Type</th>
-                                <th>Reserved?</th>
-                                <th>Booked?</th>
+                                <th>Available?</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
@@ -31,8 +30,7 @@
                                 <tr class="table-primary">
                                     <td scope="row">{{room.room_number}}</td>
                                     <td>{{room.room_type.room_type_name}}</td>
-                                    <td>{% if room.reserved %} Yes {% else %} No {% endif %}</td>
-                                    <td>{% if room.booked %} Yes {% else %} No {% endif %}</td>
+                                    <td>{% if room.available %} Yes {% else %} No {% endif %}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
