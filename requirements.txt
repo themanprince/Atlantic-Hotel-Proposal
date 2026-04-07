@@ -1,7 +1,7 @@
-fastapi
-uvicorn
-starlette
-jinja2
-python-dotenv
-sqlalchemy
-alembic
+fastapi>=0.110.0
+starlette>=0.37.2
+jinja2>=3.1.0
+uvicorn>=0.20.0
+python-dotenv>=1.0.1
+sqlalchemy>=2.0.0
+alembic>=1.13.0
