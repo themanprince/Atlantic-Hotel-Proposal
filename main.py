@@ -11,6 +11,7 @@ from services.admin import AdminServices
 from db.db import get_db
 from sqlalchemy.orm import Session
 
+import os
 
 
 app = FastAPI()
@@ -24,7 +25,7 @@ app.add_middleware(
 )
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "templates"))
 
 @app.get("/", response_class=HTMLResponse)
 async def landing(request: Request, session:Session = Depends(get_db)):

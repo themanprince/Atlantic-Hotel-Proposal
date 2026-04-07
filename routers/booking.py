@@ -5,10 +5,11 @@ from services.admin import AdminServices
 from sqlalchemy.orm import Session
 from db.db import get_db
 from datetime import date
+import os
 
 
 BookingRouter = APIRouter(prefix="/book")
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "../templates"))
 
 
 @BookingRouter.post("/book")

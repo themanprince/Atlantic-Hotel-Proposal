@@ -4,10 +4,11 @@ from fastapi.responses import HTMLResponse
 from db.db import get_db
 from sqlalchemy.orm import Session
 from services.admin import AdminServices
+import os
 
 
 AdminRouter = APIRouter(prefix="/admin")
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "../templates"))
 
 
 @AdminRouter.get("/room-type", response_class=HTMLResponse)
