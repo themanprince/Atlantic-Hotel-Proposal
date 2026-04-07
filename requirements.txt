@@ -1,4 +1,4 @@
-fastpi[standard]
+'fastpi
 uvicorn[standard]
 python-dotenv
 sqlalchemy
