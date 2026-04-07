@@ -1,0 +1,5 @@
+fastpi[standard]
+uvicorn[standard]
+python-dotenv
+sqlalchemy
+alembic
