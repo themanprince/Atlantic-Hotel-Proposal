@@ -14,7 +14,7 @@ templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), ".
 @AdminRouter.get("/room-type", response_class=HTMLResponse)
 async def new_room_type_view(request: Request, session:Session = Depends(get_db)):
     room_types = await AdminServices.get_all_room_types(session=session)
-    return templates.TemplateResponse("room_types.html", {"request": request, "room_types": room_types})
+    return templates.TemplateResponse(request=request, name="room_types.html", context={"room_types": room_types})
 
 
 @AdminRouter.post("/room-type")
@@ -26,7 +26,7 @@ async def new_room_type(session: Session = Depends(get_db), room_type_name:str =
 async def new_room_view(request: Request, session:Session = Depends(get_db)):
     room_types = await AdminServices.get_all_room_types(session=session)
     rooms = await AdminServices.get_all_rooms(session=session)
-    return templates.TemplateResponse("rooms.html", {"request": request, "room_types": room_types, "rooms": rooms})
+    return templates.TemplateResponse(request=request, name="rooms.html", context={"room_types": room_types, "rooms": rooms})
 
 
 @AdminRouter.post("/room")
@@ -38,4 +38,4 @@ async def new_room(session: Session = Depends(get_db), room_number:int = Body(em
 @AdminRouter.post("/dashboard", response_class=HTMLResponse)
 async def dashboard(request:Request, onLoadMessage:str|None = None, session:Session = Depends(get_db)):
     statistics = await AdminServices.get_dashboard_statistics(session = session)
-    return templates.TemplateResponse("dashboard.html", {"request": request, "onLoadMessage": onLoadMessage, "statistics": statistics})
+    return templates.TemplateResponse(request=request, name="dashboard.html", context={"onLoadMessage": onLoadMessage, "statistics": statistics})
