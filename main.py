@@ -30,7 +30,7 @@ templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "t
 @app.get("/", response_class=HTMLResponse)
 async def landing(request: Request, session:Session = Depends(get_db)):
 	room_types = await AdminServices.get_all_room_types(session=session)
-	return templates.TemplateResponse("index.html", {"request": request, "room_types": room_types}) #type: ignore
+	return templates.TemplateResponse(request=request, name="index.html", context={"room_types": room_types}) #type: ignore
 
 
 app.include_router(AdminRouter)
